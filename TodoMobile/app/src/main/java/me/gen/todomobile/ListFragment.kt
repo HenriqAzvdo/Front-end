@@ -6,26 +6,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import me.gen.todomobile.adapter.TarefaAdapter
+import me.gen.todomobile.databinding.FragmentListBinding
+import me.gen.todomobile.model.Tarefa
 
 
 class ListFragment : Fragment() {
+
+    private lateinit var binding: FragmentListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        binding = FragmentListBinding.inflate(layoutInflater, container, false)
 
-        val view = inflater.inflate((R.layout.fragment_list, container, false))
+        //Configuração do Recyclerview
+        val adapter = TarefaAdapter()
+        binding.recyclerTarefa.layoutManager = LinearLayoutManager(context)
+        binding.recyclerTarefa.adapter = adapter
+        binding.recyclerTarefa.setHasFixedSize(true)
 
-        val floatingAdd = view.findViewById<FloatingActionButton>(R.id.floatingAdd)
 
-        floatingAdd.setOnClickListener {
+        binding.floatingAdd.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment3_to_formFragment)
         }
 
-        return
+        return binding.root
     }
 
 }
